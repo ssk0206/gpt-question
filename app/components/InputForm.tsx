@@ -1,5 +1,7 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Message } from "../types/custom";
+import ReactTagInput from "@pathofdev/react-tag-input";
+import "@pathofdev/react-tag-input/build/index.css";
 
 type InputFormProps = {
   onSubmit: (message: Message) => Promise<void>;
@@ -7,39 +9,47 @@ type InputFormProps = {
 
 const InputForm = ({ onSubmit }: InputFormProps) => {
   // input要素への参照を作成
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [tags, setTags] = React.useState<string[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // input要素から直接値を取得
-    const inputValue = inputRef.current?.value;
+    const inputValue = tags.join("、");
+    const submitValue = `${inputValue}に関する質問をいくつか考えてください。`;
 
     if (inputValue) {
       onSubmit({
         role: "user",
-        content: inputValue,
+        content: submitValue,
       });
-      inputRef.current.value = "";
     }
   };
 
+  const handleReset = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setTags([]);
+  };
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex items-center p-4 border-t border-gray-200"
-    >
-      <input
-        type="text"
-        ref={inputRef}
-        className="flex-grow px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-        placeholder="メッセージを入力..."
+    <form onSubmit={handleSubmit} onReset={handleReset}>
+      <ReactTagInput
+        placeholder="キーワードをいくつか入力してください"
+        tags={tags}
+        onChange={(newTags) => setTags(newTags)}
       />
+      <br />
+      <button
+        type="reset"
+        className="ml-4 px-4 py-2 bg-gray-400 text-white rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+      >
+        キーワードをリセット
+      </button>
       <button
         type="submit"
         className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-lg focus:outline-none focus:ring focus:border-blue-300"
       >
-        送信
+        質問を作成
       </button>
     </form>
   );
