@@ -25,11 +25,13 @@ export default async function handler(
   try {
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
+      // model: "ada",
       messages: message,
       temperature: 0.9,
-      max_tokens: 100,
+      max_tokens: 1000,
     });
     res.status(200).json({ result: completion.data.choices[0].message });
+    console.dir(completion.data.choices);
   } catch (error: any) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {

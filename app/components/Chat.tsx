@@ -12,7 +12,7 @@ const Chat = ({ content, role }: Message) => {
       const timeoutId = setTimeout(() => {
         setChatMessage((prevText) => prevText + content[currentIndex]);
         setCurrentIndex((prevIndex) => prevIndex + 1);
-      }, 80);
+      }, 10);
 
       return () => {
         clearTimeout(timeoutId);
@@ -43,7 +43,7 @@ const Chat = ({ content, role }: Message) => {
           name={role === "user" ? "Me" : "Loris"}
           w="40px"
           h="40px"
-          src={role === "assistant" ? "/rorisu_tasogare.png" : "/user.svg"}
+          src={role === "assistant" ? "/kensaku.png" : "/user.png"}
         />
         <Flex
           borderWidth={1}
