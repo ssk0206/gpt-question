@@ -41,7 +41,7 @@ const InputForm = ({ onSubmit }: InputFormProps) => {
       <br />
       <button
         type="reset"
-        className="ml-4 px-4 py-2 bg-gray-400 text-white rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+        className="ml-4 px-4 py-2 bg-white border border-gray-500 text-gray-500 rounded-lg focus:outline-none focus:ring focus:border-blue-300"
       >
         キーワードをリセット
       </button>
